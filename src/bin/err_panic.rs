@@ -1,13 +1,19 @@
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail, ensure};
 
-enum MyError{
-    Io(std::io::Error),
-    Num(std::num::ParseIntError),
-}
+// enum MyError{
+//     Io(std::io::Error),
+//     Num(std::num::ParseIntError),
+// }
 
 fn get_int_from_file() -> Result<i32>{
     let path = "number.txt";
     let num_str = std::fs::read_to_string(path).with_context(|| format!("failed to read string from {}", path))?;
+
+    if num_str.len() >= 10{
+        bail!("it may be too large number");
+    }
+
+    ensure!(num_str.starts_with("1"), "first digit is not 1");
 
     num_str
         .trim()
@@ -19,6 +25,6 @@ fn get_int_from_file() -> Result<i32>{
 fn main(){
     match get_int_from_file(){
         Ok(x) => println!("{}", x),
-        Err(e) => println!("{}", e),
+        Err(e) => println!("{:#?}", e),
     }
 }
