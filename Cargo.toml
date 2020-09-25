@@ -1,5 +1,5 @@
 [package]
-name = "simple-calc-cli"
+name = "rpncalc"
 version = "0.1.0"
 authors = ["yikezawa <y.ikezawa93@gmail.com>"]
 edition = "2018"
